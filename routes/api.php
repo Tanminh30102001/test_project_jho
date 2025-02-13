@@ -46,7 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/update/contact/{listId}/', [ContactController::class, 'updateContactList']);
     });
     Route::prefix('/tags')->group(function () {
-        Route::get('/', [TagController::class, 'getAllList']);
+        Route::get('/', [TagController::class, 'getAllTag']);
         Route::post('/create', [TagController::class, 'createTag']);
         Route::put('/update/{tagId}/', [TagController::class, 'update']);
         Route::post('/add-contact/{tagId}', [TagController::class, 'addContacts']);

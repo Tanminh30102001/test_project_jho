@@ -21,18 +21,23 @@ class TaskController extends Controller
     }
     public function create(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'status' => 'required|in:pending,completed,in_progress',
-            'due_date' => 'required|date',
-            'opportunity_id' => 'required|exists:opportunities,id',
-            'contact_id' => 'required|exists:contacts,id',
-            'manager_id' => 'required|exists:managers,id',
-        ]);
+        try {
+            $data = $request->validate([
+                'name' => 'required|string',
+                'description' => 'nullable|string',
+                'status' => 'required|in:pending,completed,in_progress',
+                'due_date' => 'required|date',
+                'opportunity_id' => 'required|exists:opportunities,id',
+                'contact_id' => 'required|exists:contacts,id',
+                'manager_id' => 'required|exists:managers,id',
+            ]);
 
-        $task = $this->taskRepo->create($data);
-        return $this->successResponse($task, "success", 201);
+            $task = $this->taskRepo->create($data);
+            return $this->successResponse($task, "success", 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->errorResponse("Validation Error", 400, $e->errors());
+        }
+
     }
     public function updateMultiTask(Request $request)
     {

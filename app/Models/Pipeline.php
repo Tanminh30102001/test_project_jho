@@ -9,4 +9,8 @@ class Pipeline extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
+    public function columns()
+    {
+        return $this->hasMany(PipelineColumn::class);
+    }
 }
